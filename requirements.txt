@@ -4,3 +4,4 @@ openai-whisper
 huggingface_hub
 transformers
 ffmpeg-python
+gunicorn
