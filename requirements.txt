@@ -1,0 +1,6 @@
+flask
+flask-cors
+openai-whisper
+huggingface_hub
+transformers
+ffmpeg-python
