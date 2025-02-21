@@ -27,14 +27,18 @@ def upload_audio():
     # Read audio file into memory
     audio_file = request.files['audio']
     audio_bytes = audio_file.read()
-    audio_buffer = io.BytesIO(audio_bytes)
 
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as temp_audio:
+        temp_audio.write(audio_bytes)
+        temp_audio_path = temp_audio.name  
     # Load Whisper model
     model = whisper.load_model("medium")
 
     # Transcribe audio
-    result = model.transcribe(audio_buffer, language="en")
+    result = model.transcribe(temp_audio_path, language="en")
     transcribed_text = " ".join(segment['text'] for segment in result.get('segments', []))
+
+    os.remove(temp_audio_path)
 
     # Prompt for structured data extraction
     prompt = f"""You are a medical assistant extracting structured patient data from doctor-patient conversations.
