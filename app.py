@@ -4,6 +4,7 @@ import os
 import whisper
 from flask_cors import CORS
 import io
+import tempfile
 
 app = Flask(__name__)
 CORS(app)
